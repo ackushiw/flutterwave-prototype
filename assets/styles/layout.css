@@ -1,0 +1,38 @@
+main {
+  flex: 1;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.col  {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.content-width {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.pa-1 {
+  padding: 1rem;
+}

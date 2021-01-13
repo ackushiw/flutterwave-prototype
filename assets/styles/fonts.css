@@ -1,0 +1,27 @@
+@font-face {
+  font-family: Flutterwave;
+  font-style: normal;
+  font-weight: normal;
+  src: url(~assets/fonts/FLW-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Flutterwave Bold;
+  font-style: normal;
+  font-weight: normal;
+  src: url(~assets/fonts/FLW-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url(~assets/fonts/OpenSans-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: SFProDisplay;
+  font-style: normal;
+  font-weight: normal;
+  src: url(~assets/fonts/SFProDisplay-Regular.ttf) format("truetype");
+}
