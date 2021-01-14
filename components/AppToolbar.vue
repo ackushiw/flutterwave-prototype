@@ -18,11 +18,13 @@ export default {}
 
 <style scoped>
 header {
+  background-color: var(--theme-background, #fff);
   min-height: 56px;
   left: 0;
   position: fixed;
   position: sticky;
   top: 0;
+  width: 100%;
 }
 
 header > div {
