@@ -4,7 +4,7 @@
       <img alt="" loading="lazy" :src="event.image" />
     </section>
     <section class="event-block__details">
-      <span class="date date--small">{{ event.start_time }}</span>
+      <span class="date date--small">{{ event.start_time | date }}</span>
       <h3>{{ event.name }}</h3>
 
       <span
