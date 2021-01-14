@@ -14,3 +14,9 @@
     />
   </svg>
 </template>
+
+<style scoped>
+svg {
+  height: 100%;
+}
+</style>
