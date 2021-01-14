@@ -1,0 +1,55 @@
+<template>
+  <header>
+    <div class="content-width center row pa-1 space-between">
+      <NuxtLink class="logo-container" to="/">
+        <AppLogo />
+      </NuxtLink>
+      <section class="center row space-between">
+        <AppButton dense label="I didn’t get my tickets" to="/claim-tickets" />
+        <AppButton dense label="Create your own event" primary />
+      </section>
+    </div>
+  </header>
+</template>
+
+<script>
+export default {}
+</script>
+
+<style scoped>
+header {
+  min-height: 56px;
+  left: 0;
+  position: fixed;
+  position: sticky;
+  top: 0;
+}
+
+header > div {
+  max-width: 1200px;
+  padding: 2rem 1rem 0.5rem;
+
+  /* Design - pixel perfect  */
+  padding-left: 12.56px;
+  padding-right: 12.56px;
+}
+
+section {
+  min-width: 388px;
+}
+
+.logo-container {
+  display: block;
+  height: 34px;
+  max-width: 34px;
+  overflow: hidden;
+  transition: max-width 200ms linear;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .logo-container {
+    max-width: 200px;
+  }
+}
+</style>

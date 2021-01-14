@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="app-view">
+    <AppToolbar />
     <main>
       <Nuxt />
     </main>
