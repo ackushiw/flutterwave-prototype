@@ -26,6 +26,46 @@ h2 {
   line-height: 2.5rem;
 }
 
+p {
+  color: #000;
+  font-family: var(--font-primary);
+  font-style: normal;
+  font-weight: normal;
+
+  /* 18px */
+  font-size: 1.5rem;
+  line-height: 1.83rem;
+  letter-spacing: 0.0975rem;
+
+}
+
 .caption {
   color: rgba(29, 29, 29, 0.6);
+}
+
+.price, .title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  line-height: 2.4rem;
+  color: #333;
+}
+
+/* .title {
+  font-family: Flutterwave;
+  font-size: 24px;
+  line-height: 32px;
+  color: #333333;
+} */
+.label {
+  font-family: Open Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+
+.text--center {
+  text-align: center;
 }
