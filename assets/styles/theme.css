@@ -31,3 +31,18 @@ body {
   background-color: var(--theme-primary) !important;
   color: var(--theme-primary-text) !important;
 }
+
+.background_lines {
+  background-image: linear-gradient(0deg, var(--theme-primary) 4.17%, rgba(255, 255,255, 0) 4.17%, rgba(255, 255,255, 0) 50%, var(--theme-primary) 50%, var(--theme-primary) 54.17%, rgba(255, 255,255, 0) 54.17%, rgba(255, 255,255, 0) 100%);
+  background-size: 2rem 2rem;
+  bottom: -12vw;
+  position: fixed;
+  right: -62vw;
+  height: 38vw;
+  max-height: 400px;
+  min-height: 200px;
+  opacity: 0.5;
+  transform: rotate(-45deg);
+  width: 200vw;
+  z-index: -1;
+}
