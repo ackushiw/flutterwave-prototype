@@ -1,9 +1,12 @@
 <template>
   <div class="dialog-purchase">
     <div class="row">
-      <section>
+      <section class="flex--1">
         <div class="col content-width">
-          <NuxtLink class="btn-close center row" :to="`/event/${event.id}`">
+          <NuxtLink
+            class="btn-close flex--center row"
+            :to="`/event/${event.id}`"
+          >
             <svg
               width="18"
               height="18"
@@ -28,20 +31,63 @@
             </svg>
             <span>Close</span>
           </NuxtLink>
+
           <h1>Purchase {{ event.name }}</h1>
           <span class="date">
             {{ event.start_time | date }}
           </span>
 
-          <ul class="tickets-section">
-            <li v-for="ticket in ticketTypes" :key="ticket.id" class="row">
-              <div class="tickets-section__name">{{ ticket.name }}</div>
-              <div>
-                <span class="price">
+          <ul class="list list--tickets">
+            <li
+              v-for="ticket in ticketTypes"
+              :key="ticket.id"
+              class="list__item row"
+            >
+              <div class="flex--1 list__name--tickets">{{ ticket.name }}</div>
+              <div class="flex--1">
+                <span class="text--number">
                   {{ ticket.currency }}{{ ticket.price }}
                 </span>
               </div>
-              <div>0</div>
+              <div class="flex--center flex--end row">
+                <button
+                  class="btn-quantity flex--center row"
+                  @click="updateCart(ticket, -1)"
+                >
+                  <svg
+                    width="10"
+                    height="4"
+                    viewBox="0 0 10 4"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 0C9.10457 0 10 0.895431 10 2C10 3.10457 9.10457 4 8 4H2C0.89543 4 0 3.10457 0 2C0 0.895431 0.895431 0 2 0H8Z"
+                      fill="#828282"
+                    />
+                  </svg>
+                </button>
+                <span class="quantity text--number">
+                  {{ cart[ticket.id] ? cart[ticket.id].quantity : 0 }}
+                </span>
+                <button
+                  class="btn-quantity flex--center row"
+                  @click="updateCart(ticket, 1)"
+                >
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 4.99005C10 5.49288 9.59238 5.9005 9.08955 5.9005H8.00717C6.90656 5.9005 6.01434 6.79272 6.01434 7.89333V8.97541C6.01434 9.54128 5.55562 10 4.98975 10C4.42389 10 3.96516 9.54128 3.96516 8.97541V7.88308C3.96516 6.78813 3.07753 5.9005 1.98258 5.9005H0.910448C0.407621 5.9005 0 5.49288 0 4.99005C0 4.48722 0.407621 4.0796 0.910448 4.0796H1.98258C3.07753 4.0796 3.96516 3.19197 3.96516 2.09702V1.02459C3.96516 0.458724 4.42389 0 4.98975 0C5.55562 0 6.01434 0.458724 6.01434 1.02459V2.08678C6.01434 3.18738 6.90656 4.0796 8.00717 4.0796H9.08955C9.59238 4.0796 10 4.48722 10 4.99005Z"
+                      fill="#828282"
+                    />
+                  </svg>
+                </button>
+              </div>
             </li>
           </ul>
 
@@ -49,20 +95,115 @@
             Ticket sales ends on
             {{ event.tickets_sale_end_date | date }}
           </span>
-
-          <pre>{{ event }}</pre>
-          <pre>{{ ticketTypes }}</pre>
         </div>
       </section>
-      <aside class="col">
-        <h3 class="text--uppercase">Order summary</h3>
-        <div class="divider" />
-        <div class="divider" />
 
-        <AppButton label="Continue" primary />
+      <aside class="cart col">
+        <header class="block-spacing">
+          <button
+            v-if="showForm"
+            class="cart__toolbar-button flex--center row"
+            @click="showForm = false"
+          >
+            <svg
+              class="cart__toolbar-button-icon"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 12H5"
+                stroke="#333333"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 19L5 12L12 5"
+                stroke="#333333"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="text--bold">Go back</span>
+          </button>
+          <h3 v-else class="text--uppercase">Order summary</h3>
+        </header>
 
-        <div class="row">
+        <div class="block-spacing divider" />
+
+        <FormUserInfo
+          v-if="showForm"
+          class="block-spacing"
+          :disabled="!total"
+          :submit-label="total ? `Pay ${currency}${total}` : 'Pay'"
+        >
+          <div class="flex--center row space-between total">
+            <span class="list__item tezt--bold text--uppercase">
+              Total payment
+            </span>
+            <span class="text--number">
+              {{ total ? currency : null }}{{ total }}
+            </span>
+          </div>
+        </FormUserInfo>
+
+        <template v-else>
+          <ul class="list list--cart list--cart-items">
+            <li
+              v-for="(item, key) in cart"
+              :key="key"
+              class="list__item flex--center row space-between"
+            >
+              <div class="text--bold">
+                {{ item.quantity }} - {{ item.name }}
+              </div>
+              <div class="list__item-price">
+                {{ item.currency }}{{ item.price }}
+              </div>
+            </li>
+          </ul>
+
+          <div class="block-spacing divider" />
+
+          <ul class="list list--cart">
+            <li class="list__item flex--center row space-between">
+              <div class="text--bold">Sub-total</div>
+              <div class="list__item-price">
+                {{ subtotal ? currency : null }}{{ subtotal }}
+              </div>
+            </li>
+            <li class="list__item flex--center row space-between">
+              <div class="text--bold">VAT</div>
+              <div class="list__item-price">
+                {{ vatAdded ? currency : null }}{{ vatAdded || '-' }}
+              </div>
+            </li>
+          </ul>
+
+          <div class="block-spacing flex--center row space-between total">
+            <span class="list__item text--bold text--uppercase">
+              Total payment
+            </span>
+            <span class="text--number">
+              {{ total ? currency : null }}{{ total }}
+            </span>
+          </div>
+
+          <AppButton
+            class="block-spacing"
+            label="Continue"
+            primary
+            @click="showForm = true"
+          />
+        </template>
+
+        <div class="guarantee row">
           <svg
+            class="guarantee__icon"
             width="26"
             height="26"
             viewBox="0 0 26 26"
@@ -78,8 +219,10 @@
           </svg>
 
           <div class="col">
-            <span>100% customer protection</span>
-            <span>Money back guarantee</span>
+            <span class="guarantee__top text--bold">
+              100% customer protection
+            </span>
+            <span class="guarantee__bottom">Money back guarantee</span>
           </div>
         </div>
       </aside>
@@ -88,6 +231,8 @@
 </template>
 
 <script>
+import isEmpty from 'lodash-es/isEmpty'
+
 export default {
   props: {
     event: {
@@ -102,13 +247,76 @@ export default {
   },
 
   data: () => ({
+    // TODO: recognize / switch currency
+    currency: 'NGN',
+    cart: {},
     showForm: false,
+    vat: 0.15,
   }),
+
+  computed: {
+    subtotal() {
+      if (isEmpty(this.cart)) {
+        return 0
+      }
+
+      return Object.values(this.cart).reduce((subtotal, ticket) => {
+        subtotal += ticket.quantity * ticket.price
+        return subtotal
+      }, 0)
+    },
+
+    total() {
+      return this.subtotal + this.vatAdded
+    },
+
+    vatAdded() {
+      return this.subtotal * this.vat
+    },
+  },
+
+  methods: {
+    updateCart(ticket, number) {
+      if (!ticket) {
+        return
+      }
+
+      const existingQuantity = this.cart[ticket.id]
+        ? this.cart[ticket.id].quantity
+        : 0
+      const updatedQuantity = existingQuantity + number
+
+      if (updatedQuantity > ticket.qty_available) {
+        // TODO: alert user of quantity limit
+        return
+      }
+
+      if (updatedQuantity <= 0) {
+        this.cart = {
+          ...this.cart,
+          [ticket.id]: undefined,
+        }
+        return
+      }
+
+      this.cart = {
+        ...this.cart,
+        [ticket.id]: {
+          ...ticket,
+          quantity: updatedQuantity,
+        },
+      }
+    },
+  },
 }
 </script>
 
 <style scoped>
-aside {
+.block-spacing {
+  margin-bottom: 30px;
+}
+
+.cart {
   background-color: #fff;
   border-top-left-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -118,17 +326,21 @@ aside {
   width: 100%;
 }
 
+.cart__toolbar-button {
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.065em;
+}
+
 h1 {
   margin-top: 60px;
 }
 
 h3 {
   letter-spacing: 0.065em;
-  margin-bottom: 30px;
-}
-
-section {
-  flex: 1;
 }
 
 .btn-close {
@@ -143,8 +355,26 @@ section {
   text-decoration: none;
   width: 124px;
 }
+
+.cart__toolbar-button-icon,
 .btn-close svg {
   margin-right: 7px;
+}
+
+.btn-quantity {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.25);
+  height: 20px;
+  padding: 2px;
+  width: 20px;
+}
+
+.btn-close:focus,
+.btn-quantity:focus {
+  outline: none;
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.25),
+    0 0 0 2px var(--theme-info) inset;
 }
 
 .content-width {
@@ -171,21 +401,59 @@ section {
   background-color: #bdbdbd;
 }
 
-.tickets-section {
+.guarantee__bottom {
+  color: #828282;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  line-height: 14px;
+}
+.guarantee__icon {
+  margin-right: 10px;
+}
+.guarantee__top {
+  color: #333;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  line-height: 14px;
+}
+
+.list {
   list-style-type: none;
-  margin: 81px 0 14px;
   padding: 0;
 }
 
-.tickets-section__name {
+.list--cart-items {
+  min-height: 237px;
+}
+.list--cart .list__item {
+  color: #333;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 20px;
+}
+
+.list--cart .list__item-price {
+  color: #4f4f4f;
+}
+
+.list--tickets {
+  margin: 81px 0 14px;
+}
+
+.list__name--tickets {
   font-size: 2rem;
 }
-.tickets-section li {
+.list--tickets .list__item {
   align-items: center;
   border-bottom: 1px solid #bdbdbd;
   padding: 2rem 0;
 }
-.tickets-section li div {
-  flex: 1;
+
+.quantity {
+  margin: 0 16px;
+}
+
+.total {
+  align-items: flex-end;
 }
 </style>

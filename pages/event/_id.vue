@@ -210,10 +210,6 @@ img {
   text-decoration: underline;
 }
 
-.price {
-  margin-bottom: 20px;
-}
-
 .price-section {
   max-width: 348px;
 }
@@ -250,6 +246,10 @@ img {
 .social-links a:hover {
   color: var(--theme-info);
   text-decoration: underline;
+}
+
+.text--number {
+  margin-bottom: 20px;
 }
 
 @media (min-width: 600px) {

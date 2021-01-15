@@ -1,8 +1,8 @@
 <template>
-  <div class="dialog-register center col">
+  <div class="dialog-register flex--center col">
     <transition name="dialog">
       <div v-show="show" class="card col">
-        <header class="center row space-between">
+        <header class="flex--center row space-between">
           <h3
             class="text--uppercase"
             v-text="registered ? '' : 'Register for free'"
@@ -33,7 +33,7 @@
           </NuxtLink>
         </header>
 
-        <section v-if="registered" class="center col section__registered">
+        <section v-if="registered" class="flex--center col section__registered">
           <svg
             width="137"
             height="137"

@@ -6,11 +6,11 @@
     :to="to"
     v-on="$listeners"
   >
-    <span class="center row">{{ label }}</span>
+    <span class="flex--center row">{{ label }}</span>
   </NuxtLink>
 
   <button v-else :class="classNames" :disabled="disabled" v-on="$listeners">
-    <span class="center row">{{ label }}</span>
+    <span class="flex--center row">{{ label }}</span>
   </button>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
   <header>
-    <div class="content-width center row pa-1 space-between">
+    <div class="content-width flex--center row pa-1 space-between">
       <NuxtLink class="logo-container" to="/">
         <AppLogo />
       </NuxtLink>
-      <section class="center row space-between">
+      <section class="flex--center row space-between">
         <AppButton dense label="I didn’t get my tickets" to="/claim-tickets" />
         <AppButton dense label="Create your own event" primary />
       </section>

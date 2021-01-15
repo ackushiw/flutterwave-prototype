@@ -78,7 +78,7 @@ p {
   line-height: 1.1667rem;
 }
 
-.price, .title {
+.text--number, .title {
   font-family: var(--font-primary);
   font-size: 2rem;
   font-weight: 600;
@@ -100,6 +100,10 @@ p {
   line-height: 22px;
   letter-spacing: 0.5px;
   color: #333;
+}
+
+.text--bold {
+  font-weight: 600;
 }
 
 .text--center {

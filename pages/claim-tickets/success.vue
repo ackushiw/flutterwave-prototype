@@ -1,6 +1,6 @@
 <template>
   <div class="col">
-    <section class="center col pa-1">
+    <section class="flex--center col pa-1">
       <svg
         width="137"
         height="137"

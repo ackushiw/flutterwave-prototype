@@ -1,8 +1,8 @@
 <template>
   <footer>
-    <div class="center content-width row pa-1 space-between">
+    <div class="flex--center content-width row pa-1 space-between">
       <span class="caption">Copyright 2019. Flutterwave inc</span>
-      <section class="center row space-between">
+      <section class="flex--center row space-between">
         <nuxt-link class="caption" to="/terms">Terms & Conditions</nuxt-link>
         <nuxt-link class="caption" to="/privacy">Privacy Policy</nuxt-link>
       </section>
