@@ -53,8 +53,15 @@ main {
   margin-bottom: 1rem;
 }
 
+.mb--large {
+  margin-bottom: 30px;
+}
+
 .pa-1 {
   padding: 1rem;
+}
+.pa--large {
+  padding: 50px 51px;
 }
 .pb-1 {
   padding-bottom: 1rem;
