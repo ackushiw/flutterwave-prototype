@@ -55,7 +55,7 @@
         </div>
       </section>
       <aside class="col">
-        <h3>Order summary</h3>
+        <h3 class="text--uppercase">Order summary</h3>
         <div class="divider" />
         <div class="divider" />
 
@@ -123,11 +123,8 @@ h1 {
 }
 
 h3 {
-  font-size: 1.5rem;
-  line-height: 22px;
   letter-spacing: 0.065em;
   margin-bottom: 30px;
-  text-transform: uppercase;
 }
 
 section {
