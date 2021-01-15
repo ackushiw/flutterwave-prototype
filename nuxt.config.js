@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
@@ -21,6 +23,16 @@ export default {
     '~assets/styles/global.css',
     '~assets/styles/theme.css',
   ],
+
+  generate: {
+    fallback: true,
+    routes: () =>
+      axios
+        .get('https://eventsflw.herokuapp.com/v1/events')
+        .then(({ data: { data } }) =>
+          data.events.map(({ id }) => '/event/' + id)
+        ),
+  },
 
   loading: {
     color: '#F5A623',
