@@ -9,11 +9,15 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'flutterwave-tickets',
+    title: 'Flutterwave events',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        content: 'The best events happening now.',
+        hid: 'description',
+        name: 'description',
+      },
     ],
   },
 

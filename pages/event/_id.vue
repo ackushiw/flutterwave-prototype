@@ -133,6 +133,32 @@ export default {
   head() {
     return {
       title: this.event.name,
+      meta: [
+        {
+          content: this.event.name,
+          hid: 'og:title',
+          property: 'og:title',
+        },
+        {
+          content: this.event.description,
+          hid: 'description',
+          name: 'description',
+        },
+        {
+          content: this.event.description,
+          hid: 'og:description',
+          name: 'og:description',
+        },
+        {
+          content: this.event.image,
+          hid: 'og:image',
+          property: 'og:image',
+        },
+        {
+          content: 'summary_large_image',
+          name: 'twitter:card',
+        },
+      ],
     }
   },
 
