@@ -17,11 +17,17 @@ body {
   background-color: var(--theme-background, #fff);
 }
 
+.text--error {
+  color: var(--theme-error);
+}
 .text--info {
   color: var(--theme-info);
 }
 .text--primary {
   color: var(--theme-primary);
+}
+.text--success {
+  color: var(--theme-success);
 }
 
 .theme--primary {

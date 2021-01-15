@@ -1,89 +1,103 @@
 <template>
-  <div class="grid">
-    <section class="section__main col pa-1 space-between">
-      <article>
-        <span class="date">{{ event.start_time | date }}</span>
-        <h1>{{ event.name }}</h1>
-        <p>
-          <i>{{ event.description }}</i>
-        </p>
-      </article>
+  <div>
+    <div class="grid">
+      <section class="section__main col pa-1 space-between">
+        <article>
+          <span class="date">{{ event.start_time | date }}</span>
+          <h1>{{ event.name }}</h1>
+          <p>
+            <i>{{ event.description }}</i>
+          </p>
+        </article>
 
-      <div class="col price-section">
-        <span class="price">N5000 - N2,000,000</span>
+        <div class="col price-section">
+          <span v-if="event.is_sold_out" class="price text--error">
+            Sold out
+          </span>
+          <span v-else-if="event.is_free" class="price text--success">
+            Free
+          </span>
+          <span v-else class="price">N5000 - N2,000,000</span>
 
-        <AppButton disabled label="Buy tickets" primary />
-      </div>
-    </section>
+          <AppButton
+            :disabled="event.is_sold_out"
+            :label="event.is_free ? 'Register for free' : 'Buy tickets'"
+            primary
+            @click="handleClick(event)"
+          />
+        </div>
+      </section>
 
-    <section class="section__image pa-1">
-      <div class="card image-card">
-        <img alt="" :src="event.image" />
-      </div>
-    </section>
+      <section class="section__image pa-1">
+        <div class="card image-card">
+          <img alt="" :src="event.image" />
+        </div>
+      </section>
 
-    <section class="section__divider pa-1">
-      <div class="divider" />
-    </section>
+      <section class="section__divider pa-1">
+        <div class="divider" />
+      </section>
 
-    <section class="section__venue col pa-1">
-      <h5 class="mb-1">Venue</h5>
-      <p class="title mb-1 pb-1">{{ event.venue }}</p>
+      <section class="section__venue col pa-1">
+        <h5 class="mb-1">Venue</h5>
+        <p class="title mb-1 pb-1">{{ event.venue }}</p>
 
-      <a class="link-map row text--primary" href="#map">
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clip-path="url(#clip0)">
-            <path
-              d="M0.75 4.5V16.5L6 13.5L12 16.5L17.25 13.5V1.5L12 4.5L6 1.5L0.75 4.5Z"
-              stroke="#F5A623"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M6 1.5V13.5"
-              stroke="#F5A623"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M12 4.5V16.5"
-              stroke="#F5A623"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0">
-              <rect width="18" height="18" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
+        <a class="link-map row text--primary" href="#map">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0)">
+              <path
+                d="M0.75 4.5V16.5L6 13.5L12 16.5L17.25 13.5V1.5L12 4.5L6 1.5L0.75 4.5Z"
+                stroke="#F5A623"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6 1.5V13.5"
+                stroke="#F5A623"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 4.5V16.5"
+                stroke="#F5A623"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0">
+                <rect width="18" height="18" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
 
-        <span>View map for directions</span>
-      </a>
-    </section>
+          <span>View map for directions</span>
+        </a>
+      </section>
 
-    <section class="section__info pa-1">
-      <h5 class="mb-1">Date and time</h5>
-      <div class="title mb-1 pb-1">{{ event.start_time | dateFull }}</div>
-      <template v-if="socialLinks">
-        <h6 class="mb-1">Social links</h6>
-        <ul class="social-links">
-          <li v-for="(link, key) in socialLinks" :key="key">
-            <a :href="link" rel="noopener">{{ link }}</a>
-          </li>
-        </ul>
-      </template>
-    </section>
+      <section class="section__info pa-1">
+        <h5 class="mb-1">Date and time</h5>
+        <div class="title mb-1 pb-1">{{ event.start_time | dateFull }}</div>
+        <template v-if="socialLinks">
+          <h6 class="mb-1">Social links</h6>
+          <ul class="social-links">
+            <li v-for="(link, key) in socialLinks" :key="key">
+              <a :href="link" rel="noopener">{{ link }}</a>
+            </li>
+          </ul>
+        </template>
+      </section>
+    </div>
+    <NuxtChild v-bind="{ event, ticketTypes }" />
   </div>
 </template>
 
@@ -98,17 +112,17 @@ const testLinks = {
 export default {
   async asyncData({ $axios, params }) {
     const { data: event } = await $axios.$get('events/' + params.id)
-    const { data: ticketType } = await $axios.$get(
+    const { data: ticketTypes } = await $axios.$get(
       'ticket-types/events/' + params.id
     )
 
-    return { event, id: params.id, ticketType }
+    return { event, id: params.id, ticketTypes }
   },
 
   data: () => ({
     event: {},
     id: null,
-    ticketType: {},
+    ticketTypes: [],
   }),
 
   head() {
@@ -124,6 +138,18 @@ export default {
       }
       const links = JSON.parse(this.event.social_links)
       return isEmpty(links) ? testLinks : links
+    },
+  },
+
+  methods: {
+    handleClick(event) {
+      const path = event.is_sold_out
+        ? 'sold-out'
+        : !event.is_free
+        ? 'register'
+        : 'purchase'
+
+      this.$router.push(`/event/${event.id}/${path}`)
     },
   },
 }

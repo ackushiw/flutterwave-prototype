@@ -1,9 +1,15 @@
 <template>
-  <NuxtLink v-if="to" :class="classNames" :to="to" v-on="$listeners">
+  <NuxtLink
+    v-if="to"
+    :class="classNames"
+    :disabled="disabled"
+    :to="to"
+    v-on="$listeners"
+  >
     <span class="center row">{{ label }}</span>
   </NuxtLink>
 
-  <button v-else :class="classNames" v-on="$listeners">
+  <button v-else :class="classNames" :disabled="disabled" v-on="$listeners">
     <span class="center row">{{ label }}</span>
   </button>
 </template>
@@ -12,6 +18,10 @@
 export default {
   props: {
     dense: {
+      default: false,
+      type: Boolean,
+    },
+    disabled: {
       default: false,
       type: Boolean,
     },
@@ -53,6 +63,11 @@ a {
   text-decoration: none;
 }
 
+a:disabled,
+button:disabled {
+  cursor: not-allowed;
+}
+
 button.dense {
   font-size: 1rem;
 
@@ -74,7 +89,13 @@ span {
   text-transform: uppercase;
 }
 
-.theme--primary:hover {
+.theme--primary:disabled {
+  background-color: lightgray !important;
+  box-shadow: none;
+  border: 2px dashed grey;
+}
+
+.theme--primary:not(:disabled):hover {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
   filter: hue-rotate(-10deg);
 }
