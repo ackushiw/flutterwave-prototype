@@ -153,18 +153,20 @@
 
         <template v-else>
           <ul class="list list--cart list--cart-items">
-            <li
-              v-for="(item, key) in cart"
-              :key="key"
-              class="list__item flex--center row space-between"
-            >
-              <div class="text--bold">
-                {{ item.quantity }} - {{ item.name }}
-              </div>
-              <div class="list__item-price">
-                {{ item.currency }}{{ item.price }}
-              </div>
-            </li>
+            <template v-for="(item, key) in cart">
+              <li
+                v-if="item.quantity"
+                :key="key"
+                class="list__item flex--center row space-between"
+              >
+                <div class="text--bold">
+                  {{ item.quantity }} - {{ item.name }}
+                </div>
+                <div class="list__item-price">
+                  {{ item.currency }}{{ item.price }}
+                </div>
+              </li>
+            </template>
           </ul>
 
           <div class="block-spacing divider" />
@@ -195,6 +197,7 @@
 
           <AppButton
             class="block-spacing"
+            :disabled="!total"
             label="Continue"
             primary
             @click="showForm = true"
@@ -291,19 +294,11 @@ export default {
         return
       }
 
-      if (updatedQuantity <= 0) {
-        this.cart = {
-          ...this.cart,
-          [ticket.id]: undefined,
-        }
-        return
-      }
-
       this.cart = {
         ...this.cart,
         [ticket.id]: {
           ...ticket,
-          quantity: updatedQuantity,
+          quantity: updatedQuantity > 0 ? updatedQuantity : 0,
         },
       }
     },
