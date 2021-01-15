@@ -32,6 +32,15 @@ div.content-width {
 
 .grid {
   max-width: 1280px;
-  padding: 20px;
+  padding: 0.5rem;
+}
+
+@media (min-width: 660px) {
+  h1 {
+    margin: 100px 0 8px;
+  }
+  .grid {
+    padding: 20px;
+  }
 }
 </style>

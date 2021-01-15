@@ -25,8 +25,8 @@ main {
 .grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
-  gap: 1.66rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
 .row {
@@ -52,4 +52,11 @@ main {
 }
 .pb-1 {
   padding-bottom: 1rem;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
 }
