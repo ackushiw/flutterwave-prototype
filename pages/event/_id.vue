@@ -14,7 +14,9 @@
         </article>
 
         <div class="col price-section">
-          <span v-if="!event.is_free" class="price">N5000 - N2,000,000</span>
+          <span v-if="!event.is_free" class="text--number">
+            {{ 'NGN' | unit }}5000 - {{ 'NGN' | unit }}2,000,000
+          </span>
 
           <AppButton
             :disabled="event.is_sold_out"

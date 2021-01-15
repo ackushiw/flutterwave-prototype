@@ -46,7 +46,7 @@
               <div class="flex--1 list__name--tickets">{{ ticket.name }}</div>
               <div class="flex--1">
                 <span class="text--number">
-                  {{ ticket.currency }}{{ ticket.price }}
+                  {{ ticket.currency | unit }}{{ ticket.price }}
                 </span>
               </div>
               <div class="flex--center flex--end row">
@@ -139,14 +139,17 @@
           v-if="showForm"
           class="block-spacing"
           :disabled="!total"
-          :submit-label="total ? `Pay ${currency}${total}` : 'Pay'"
+          :submit-label="
+            total ? `Pay ${$options.filters.unit(currency)}${total}` : 'Pay'
+          "
+          @submit="handlePayment"
         >
           <div class="flex--center row space-between total">
             <span class="list__item tezt--bold text--uppercase">
               Total payment
             </span>
             <span class="text--number">
-              {{ total ? currency : null }}{{ total }}
+              {{ total ? currency : null | unit }}{{ total }}
             </span>
           </div>
         </FormUserInfo>
@@ -163,7 +166,7 @@
                   {{ item.quantity }} - {{ item.name }}
                 </div>
                 <div class="list__item-price">
-                  {{ item.currency }}{{ item.price }}
+                  {{ item.currency | unit }}{{ item.price }}
                 </div>
               </li>
             </template>
@@ -175,13 +178,13 @@
             <li class="list__item flex--center row space-between">
               <div class="text--bold">Sub-total</div>
               <div class="list__item-price">
-                {{ subtotal ? currency : null }}{{ subtotal }}
+                {{ subtotal ? currency : null | unit }}{{ subtotal }}
               </div>
             </li>
             <li class="list__item flex--center row space-between">
               <div class="text--bold">VAT</div>
               <div class="list__item-price">
-                {{ vatAdded ? currency : null }}{{ vatAdded || '-' }}
+                {{ vatAdded ? currency : null | unit }}{{ vatAdded || '-' }}
               </div>
             </li>
           </ul>
@@ -191,7 +194,7 @@
               Total payment
             </span>
             <span class="text--number">
-              {{ total ? currency : null }}{{ total }}
+              {{ total ? currency : null | unit }}{{ total }}
             </span>
           </div>
 
@@ -279,6 +282,30 @@ export default {
   },
 
   methods: {
+    async handlePayment({ email, name, phone }) {
+      const tickets = Object.values(this.cart).reduce((order, cartItem) => {
+        if (cartItem.quantity > 0) {
+          order[cartItem.id] = cartItem.quantity
+        }
+        return order
+      }, {})
+
+      try {
+        const res = await this.$axios.$post('orders', {
+          base_amount: this.subtotal,
+          email,
+          event_id: this.event.id,
+          name,
+          phone,
+          tickets_bought: tickets,
+          value_added_tax: this.vatAdded,
+        })
+        // TODO: Notify user of order
+      } catch (error) {
+        // TODO: Notify user of error
+      }
+    },
+
     updateCart(ticket, number) {
       if (!ticket) {
         return
