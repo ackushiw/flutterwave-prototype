@@ -1,0 +1,10 @@
+:root {
+  --base-size: 12px;
+  --easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --theme-background: #F2F2F2;
+  --theme-error: #EB5757;
+  --theme-primary: #F5A623;
+  --theme-primary-text: #FFF;
+  --theme-info: #2D9CDB;
+  --theme-success: #219653;
+}

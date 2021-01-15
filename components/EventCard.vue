@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink class="event-block" to="/">
+  <NuxtLink class="event-block" :to="`/event/${event.id}`">
     <section class="event-block__image">
       <img alt="" loading="lazy" :src="event.image" />
     </section>
@@ -13,7 +13,7 @@
         v-text="'Sold out'"
       />
       <span
-        v-else-if="is_free"
+        v-else-if="event.is_free"
         class="details-price details-price--free"
         v-text="'Free'"
       />

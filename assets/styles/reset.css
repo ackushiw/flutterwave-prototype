@@ -12,7 +12,15 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+body {
+  width: 100%;
+}
+
 button {
   border: none;
   outline: none;
+}
+
+h1 {
+  margin: 0;
 }

@@ -14,4 +14,8 @@ const formatDate = (value, stringFormat = 'do MMMM yyyy') => {
   return date ? format(new Date(value), stringFormat) : null
 }
 
+const formatFullDate = (value) =>
+  formatDate(value, 'eeee, MMMM do yyyy, HH:mmaaaa')
+
 Vue.filter('date', formatDate)
+Vue.filter('dateFull', formatFullDate)

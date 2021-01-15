@@ -18,7 +18,6 @@ export default {}
 
 <style scoped>
 header {
-  background-color: var(--theme-background, #fff);
   min-height: 56px;
   left: 0;
   position: fixed;
@@ -28,12 +27,10 @@ header {
 }
 
 header > div {
-  max-width: 1200px;
+  background-color: rgba(242, 242, 242, 0.8);
+  backdrop-filter: blur(2px);
+  max-width: 1280px;
   padding: 2rem 1rem 0.5rem;
-
-  /* Design - pixel perfect  */
-  padding-left: 12.56px;
-  padding-right: 12.56px;
 }
 
 section {

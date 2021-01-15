@@ -1,0 +1,32 @@
+.background_lines {
+  background-image: linear-gradient(0deg, var(--theme-primary) 4.17%, rgba(255, 255,255, 0) 4.17%, rgba(255, 255,255, 0) 50%, var(--theme-primary) 50%, var(--theme-primary) 54.17%, rgba(255, 255,255, 0) 54.17%, rgba(255, 255,255, 0) 100%);
+  background-size: 2rem 2rem;
+  bottom: -12vw;
+  position: fixed;
+  right: -62vw;
+  height: 38vw;
+  max-height: 400px;
+  min-height: 200px;
+  opacity: 0.5;
+  transform: rotate(-45deg);
+  width: 200vw;
+  z-index: -1;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.image-card {
+  border-radius: 6px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.divider {
+  background-color: #CCB7B1;
+  height: 1px;
+  width: 100%;
+}

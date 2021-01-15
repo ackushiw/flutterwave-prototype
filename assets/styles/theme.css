@@ -1,15 +1,8 @@
 @import './fonts.css';
+@import './variables.css';
+@import './transitions.css';
 @import './typography.css';
-
-:root {
-  --base-size: 12px;
-  --theme-background: #F2F2F2;
-  --theme-error: #EB5757;
-  --theme-primary: #F5A623;
-  --theme-primary-text: #FFF;
-  --theme-info: #2D9CDB;
-  --theme-success: #219653;
-}
+@import './components.css';
 
 :focus {
   outline: var(--theme-info, -webkit-focus-ring-color) auto 1px;
@@ -27,47 +20,11 @@ body {
 .text--info {
   color: var(--theme-info);
 }
+.text--primary {
+  color: var(--theme-primary);
+}
 
 .theme--primary {
   background-color: var(--theme-primary) !important;
   color: var(--theme-primary-text) !important;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-
-.background_lines {
-  background-image: linear-gradient(0deg, var(--theme-primary) 4.17%, rgba(255, 255,255, 0) 4.17%, rgba(255, 255,255, 0) 50%, var(--theme-primary) 50%, var(--theme-primary) 54.17%, rgba(255, 255,255, 0) 54.17%, rgba(255, 255,255, 0) 100%);
-  background-size: 2rem 2rem;
-  bottom: -12vw;
-  position: fixed;
-  right: -62vw;
-  height: 38vw;
-  max-height: 400px;
-  min-height: 200px;
-  opacity: 0.5;
-  transform: rotate(-45deg);
-  width: 200vw;
-  z-index: -1;
-}
-
-.page-leave-active {
-  transition: opacity 150ms cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-.page-enter,
-.page-leave-to {
-  opacity: 0;
-}
-
-.layout-enter-active,
-.layout-leave-active {
-  transition: opacity 150ms cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-.layout-enter,
-.layout-leave-to {
-  opacity: 0;
 }
