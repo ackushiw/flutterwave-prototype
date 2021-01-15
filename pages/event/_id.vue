@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="grid">
-      <section class="section__main col pa-1 space-between">
+      <section
+        class="section__main col pa-1"
+        :class="[!event.is_free && 'space-between']"
+      >
         <article>
           <span class="date">{{ event.start_time | date }}</span>
           <h1>{{ event.name }}</h1>
@@ -11,17 +14,17 @@
         </article>
 
         <div class="col price-section">
-          <span v-if="event.is_sold_out" class="price text--error">
-            Sold out
-          </span>
-          <span v-else-if="event.is_free" class="price text--success">
-            Free
-          </span>
-          <span v-else class="price">N5000 - N2,000,000</span>
+          <span v-if="!event.is_free" class="price">N5000 - N2,000,000</span>
 
           <AppButton
             :disabled="event.is_sold_out"
-            :label="event.is_free ? 'Register for free' : 'Buy tickets'"
+            :label="
+              event.is_sold_out
+                ? 'Sold out'
+                : event.is_free
+                ? 'Register for free'
+                : 'Buy tickets'
+            "
             primary
             @click="handleClick(event)"
           />
@@ -143,11 +146,7 @@ export default {
 
   methods: {
     handleClick(event) {
-      const path = event.is_sold_out
-        ? 'sold-out'
-        : !event.is_free
-        ? 'register'
-        : 'purchase'
+      const path = event.is_free ? 'register' : 'purchase'
 
       this.$router.push(`/event/${event.id}/${path}`)
     },
@@ -156,6 +155,9 @@ export default {
 </script>
 
 <style scoped>
+article {
+  margin-bottom: 30px;
+}
 article p {
   color: #4a4a4a;
   font-size: 18px;
