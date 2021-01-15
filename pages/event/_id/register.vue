@@ -1,6 +1,7 @@
 <template>
   <div class="dialog-register center col">
-    <div class="card col">
+    <transition name="dialog">
+      <div v-show="show" class="card col">
         <header class="center row space-between">
           <h3
             class="text--uppercase"
@@ -100,6 +101,7 @@
           </form>
         </section>
       </div>
+    </transition>
   </div>
 </template>
 
