@@ -291,7 +291,7 @@ export default {
       }, {})
 
       try {
-        const res = await this.$axios.$post('orders', {
+        await this.$axios.$post('orders', {
           base_amount: this.subtotal,
           email,
           event_id: this.event.id,
