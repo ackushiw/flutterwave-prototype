@@ -1,5 +1,7 @@
 # flutterwave-tickets
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/eacb2f1a-a0eb-42a3-90bc-cb55b5b64bd4/deploy-status)](https://app.netlify.com/sites/flutterwave-ackushiw/deploys)
+
 ## Build Setup
 
 ```bash
