@@ -22,6 +22,10 @@ export default {
     '~assets/styles/theme.css',
   ],
 
+  loading: {
+    color: '#F5A623',
+  },
+
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~plugins/date-fns'],
 
