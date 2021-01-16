@@ -261,6 +261,23 @@ export default {
   }),
 
   computed: {
+    paymentData() {
+      return {
+        tx_ref: this.generateReference(),
+        amount: this.total > 50000 ? 50000 : this.total, // Hack to for test api
+        currency: this.currency,
+        payment_options: 'card,mobilemoney,mobilemoneyghana,ussd',
+        redirect_url: '',
+        customer: null,
+        customizations: {
+          title: this.event.name,
+          // TODO: create description with list of tickets
+          description: 'Tickets for ' + this.event.name,
+          logo: 'https://flutterwave-ackushiw.netlify.app/icon.png',
+        },
+        onclose: this.closedPaymentModal,
+      }
+    },
     subtotal() {
       if (isEmpty(this.cart)) {
         return 0
@@ -282,7 +299,35 @@ export default {
   },
 
   methods: {
+    closedPaymentModal() {
+      // TODO: Handle closed flutterwave modal
+    },
+
+    generateReference() {
+      const date = new Date()
+      return date.getTime().toString()
+    },
+
     async handlePayment({ email, name, phone }) {
+      let paymentResponse
+      try {
+        paymentResponse = await this.asyncPayWithFlutterwave({
+          ...this.paymentData,
+          customer: {
+            email,
+            name,
+            phone_number: phone,
+          },
+        })
+      } catch (error) {
+        // TODO: Notify user of error
+      }
+
+      if (paymentResponse.status !== 'successful') {
+        // TODO: Notify user of unsuccessful payment
+        return
+      }
+
       const tickets = Object.values(this.cart).reduce((order, cartItem) => {
         if (cartItem.quantity > 0) {
           order[cartItem.id] = cartItem.quantity

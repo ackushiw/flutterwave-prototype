@@ -1,6 +1,9 @@
 import axios from 'axios'
 
 export default {
+  env: {
+    fwKey: 'FLWPUBK_TEST-689e890449313d34531131d279e2ed27-X',
+  },
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -43,7 +46,7 @@ export default {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~plugins/filters'],
+  plugins: ['~plugins/filters', '~plugins/flutterwave'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
