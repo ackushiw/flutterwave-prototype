@@ -552,20 +552,22 @@ h3 {
     padding-bottom: 72px;
   }
   .cart {
+    transition-duration: 250ms;
     transition-property: transform;
     transition-timing-function: var(--easing-standard);
   }
   .cart--min {
-    transition-duration: 250ms;
     transform: translateY(calc(100vh - 104px));
   }
   .cart--open {
-    transition-duration: 300ms;
     transform: translateY(0);
+    transition-duration: 300ms;
   }
 
   .cart--empty {
     transform: translateY(100vh);
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
