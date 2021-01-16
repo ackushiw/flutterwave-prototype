@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-purchase">
-    <div class="row">
+    <div class="row row--desktop">
       <section class="flex--1">
         <div class="col content-width">
           <NuxtLink
@@ -98,8 +98,17 @@
         </div>
       </section>
 
-      <aside class="cart col">
-        <header class="block-spacing">
+      <aside
+        class="cart col"
+        :class="[
+          cartItems.length
+            ? mobileCart
+              ? 'cart--open'
+              : 'cart--min'
+            : 'cart--empty',
+        ]"
+      >
+        <header class="block-spacing flex--center row space-between">
           <button
             v-if="showForm"
             class="cart__toolbar-button flex--center row"
@@ -131,6 +140,13 @@
             <span class="text--bold">Go back</span>
           </button>
           <h3 v-else class="text--uppercase">Order summary</h3>
+
+          <AppButton
+            v-if="!showForm"
+            dense
+            :label="mobileCart ? 'Close' : 'View'"
+            @click="mobileCart = !mobileCart"
+          />
         </header>
 
         <div class="block-spacing divider" />
@@ -256,11 +272,16 @@ export default {
     // TODO: recognize / switch currency
     currency: 'NGN',
     cart: {},
+    mobileCart: false,
     showForm: false,
     vat: 0.15,
   }),
 
   computed: {
+    cartItems() {
+      return Object.values(this.cart).filter((item) => item.quantity > 0)
+    },
+
     paymentData() {
       return {
         tx_ref: this.generateReference(),
@@ -278,6 +299,7 @@ export default {
         onclose: this.closedPaymentModal,
       }
     },
+
     subtotal() {
       if (isEmpty(this.cart)) {
         return 0
@@ -328,10 +350,8 @@ export default {
         return
       }
 
-      const tickets = Object.values(this.cart).reduce((order, cartItem) => {
-        if (cartItem.quantity > 0) {
-          order[cartItem.id] = cartItem.quantity
-        }
+      const tickets = this.cartItems.reduce((order, cartItem) => {
+        order[cartItem.id] = cartItem.quantity
         return order
       }, {})
 
@@ -386,10 +406,12 @@ export default {
 .cart {
   background-color: #fff;
   border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   height: 100vh;
-  max-width: 470px;
+  position: fixed;
   padding: 51px;
+  overflow: auto;
   width: 100%;
 }
 
@@ -408,6 +430,7 @@ h1 {
 
 h3 {
   letter-spacing: 0.065em;
+  margin: 0;
 }
 
 .btn-close {
@@ -522,5 +545,36 @@ h3 {
 
 .total {
   align-items: flex-end;
+}
+
+@media (max-width: 959px) {
+  section {
+    padding-bottom: 72px;
+  }
+  .cart {
+    transition-property: transform;
+    transition-timing-function: var(--easing-standard);
+  }
+  .cart--min {
+    transition-duration: 250ms;
+    transform: translateY(calc(100vh - 104px));
+  }
+  .cart--open {
+    transition-duration: 300ms;
+    transform: translateY(0);
+  }
+
+  .cart--empty {
+    transform: translateY(100vh);
+  }
+}
+
+@media (min-width: 960px) {
+  .cart {
+    border-top-right-radius: 0;
+    max-width: 470px;
+    position: relative;
+    top: 0;
+  }
 }
 </style>

@@ -50,6 +50,7 @@ export default {
 <style scoped>
 button,
 a {
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 4px;
   color: #333;
   cursor: pointer;

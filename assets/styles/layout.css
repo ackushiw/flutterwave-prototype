@@ -39,6 +39,9 @@ main {
   display: flex;
   flex-direction: row;
 }
+.row--desktop {
+  flex-direction: column;
+}
 
 .space-between {
   justify-content: space-between;
@@ -71,5 +74,11 @@ main {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .row--desktop {
+    flex-direction: row;
   }
 }
