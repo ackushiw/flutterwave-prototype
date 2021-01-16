@@ -1,5 +1,5 @@
 <template>
-  <form class="col" @submit.prevent="$emit('submit', { email, name, phone })">
+  <form class="col" @submit.prevent="handleSubmit({ email, name, phone })">
     <FwInput
       v-model="name"
       autocomplete="name"
@@ -54,7 +54,27 @@ export default {
     email: '',
     name: '',
     phone: '',
+    store: null,
   }),
+
+  mounted() {
+    this.store = window.sessionStorage
+    this.email = this.store.getItem('user-email') || ''
+    this.name = this.store.getItem('user-name') || ''
+    this.phone = this.store.getItem('user-phone') || ''
+  },
+
+  methods: {
+    handleSubmit({ email, name, phone }) {
+      this.$emit('submit', { email, name, phone })
+
+      try {
+        this.store.setItem('user-email', email)
+        this.store.setItem('user-name', name)
+        this.store.setItem('user-phone', phone)
+      } catch (_error) {}
+    },
+  },
 }
 </script>
 

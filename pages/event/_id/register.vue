@@ -64,7 +64,12 @@
 
         <section v-else class="col">
           <div class="divider" />
-          <form
+          <FormUserInfo
+            :disabled="!event.is_free"
+            submit-label="Register"
+            @submit="handleRegister"
+          />
+          <!-- <form
             class="col"
             @submit.prevent="handleRegister({ email, name, phone })"
           >
@@ -98,7 +103,7 @@
               primary
               type="submit"
             />
-          </form>
+          </form> -->
         </section>
       </div>
     </transition>

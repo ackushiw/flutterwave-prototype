@@ -22,7 +22,7 @@ export default {
 
   mounted() {
     this.store = window.sessionStorage
-    this.email = this.store.getItem('tickets-email') || ''
+    this.email = this.store.getItem('user-email') || ''
   },
 
   methods: {
@@ -30,7 +30,7 @@ export default {
       this.email = email
 
       try {
-        this.store.setItem('tickets-email', email)
+        this.store.setItem('user-email', email)
       } catch (_error) {}
     },
   },
