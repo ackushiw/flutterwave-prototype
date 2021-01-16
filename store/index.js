@@ -69,6 +69,9 @@ export const getters = {
     getters.getEventData(state.events[getCacheId({ id })]),
 
   getEventData: (_state, getters) => (event) => {
+    if (!event) {
+      return {}
+    }
     const tickets = getters.ticketsByEventId(event.id) || []
 
     let currency = ''

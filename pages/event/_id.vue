@@ -14,11 +14,19 @@
         </article>
 
         <div class="col price-section">
-          <span v-if="!event.is_free" class="text--number">
-            {{ event.currency | unit }}{{ event.priceRange.min }}
-            -
-            {{ event.currency | unit }}{{ event.priceRange.max }}
-          </span>
+          <template v-if="!event.is_free && event.priceRange">
+            <span
+              v-if="event.priceRange.min === event.priceRange.max"
+              class="text--number"
+            >
+              {{ event.currency | unit }}{{ event.priceRange.max }}
+            </span>
+            <span v-else class="text--number">
+              {{ event.currency | unit }}{{ event.priceRange.min }}
+              -
+              {{ event.currency | unit }}{{ event.priceRange.max }}
+            </span>
+          </template>
 
           <AppButton
             :disabled="event.is_sold_out"
