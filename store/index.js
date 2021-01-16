@@ -1,9 +1,14 @@
 const getCacheId = ({ id }) => `fw_event_${id}`
 
-const buildEvent = (event) => ({
-  ...event,
-  image: event.image || '/undraw_not_found.png',
-})
+const buildEvent = (event) => {
+  const image = event.image
+    ? event.image.replace('&w=2850', '&w=560')
+    : '/undraw_not_found.png'
+  return {
+    ...event,
+    image,
+  }
+}
 
 const getPriceRange = (tickets) => {
   if (!tickets || !tickets.length) {

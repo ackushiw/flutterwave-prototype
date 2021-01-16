@@ -79,4 +79,26 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  pwa: {
+    workbox: {
+      /* workbox options */
+      runtimeCaching: [
+        // Cache unsplash images
+        {
+          urlPattern: 'https://images.unsplash.com/.*',
+          handler: 'CacheFirst',
+          strategyPlugins: [
+            {
+              use: 'Expiration',
+              config: {
+                maxEntries: 60,
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
 }
