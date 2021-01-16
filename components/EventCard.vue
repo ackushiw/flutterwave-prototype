@@ -17,7 +17,17 @@
         class="details-price details-price--free"
         v-text="'Free'"
       />
-      <span v-else class="details-price">N5000 - N2,000,000</span>
+      <span
+        v-else-if="event.priceRange.min === event.priceRange.max"
+        class="details-price"
+      >
+        {{ event.currency | unit }}{{ event.priceRange.max }}
+      </span>
+      <span v-else class="details-price">
+        {{ event.currency | unit }}{{ event.priceRange.min }}
+        -
+        {{ event.currency | unit }}{{ event.priceRange.max }}
+      </span>
     </section>
   </NuxtLink>
 </template>

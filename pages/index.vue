@@ -10,18 +10,14 @@
 </template>
 
 <script>
-export default {
-  async asyncData({ $axios }) {
-    const {
-      data: { events },
-    } = await $axios.$get('events')
+import { mapGetters } from 'vuex'
 
-    return { events }
+export default {
+  asyncData({ $axios, store }) {
+    store.dispatch('fetchAllEvents')
   },
 
-  data: () => ({
-    events: [],
-  }),
+  computed: mapGetters(['events']),
 }
 </script>
 

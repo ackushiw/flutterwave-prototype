@@ -15,7 +15,9 @@
 
         <div class="col price-section">
           <span v-if="!event.is_free" class="text--number">
-            {{ 'NGN' | unit }}5000 - {{ 'NGN' | unit }}2,000,000
+            {{ event.currency | unit }}{{ event.priceRange.min }}
+            -
+            {{ event.currency | unit }}{{ event.priceRange.max }}
           </span>
 
           <AppButton
@@ -108,6 +110,7 @@
 
 <script>
 import isEmpty from 'lodash-es/isEmpty'
+import { mapGetters } from 'vuex'
 
 const testLinks = {
   facebook: 'https://facebook.com',
@@ -115,20 +118,9 @@ const testLinks = {
 }
 
 export default {
-  async asyncData({ $axios, params }) {
-    const { data: event } = await $axios.$get('events/' + params.id)
-    const { data: ticketTypes } = await $axios.$get(
-      'ticket-types/events/' + params.id
-    )
-
-    return { event, id: params.id, ticketTypes }
+  asyncData({ $axios, params, store }) {
+    store.dispatch('fetchEvent', params.id)
   },
-
-  data: () => ({
-    event: {},
-    id: null,
-    ticketTypes: [],
-  }),
 
   head() {
     return {
@@ -163,12 +155,22 @@ export default {
   },
 
   computed: {
+    ...mapGetters(['eventById']),
+
+    event() {
+      return this.eventById(this.$route.params.id)
+    },
+
     socialLinks() {
       if (!this.event.social_links) {
         return {}
       }
       const links = JSON.parse(this.event.social_links)
       return isEmpty(links) ? testLinks : links
+    },
+
+    ticketTypes() {
+      return this.event.tickets
     },
   },
 
