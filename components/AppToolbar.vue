@@ -1,43 +1,69 @@
 <template>
-  <header>
-    <div class="content-width flex--center row pa-1 space-between">
-      <NuxtLink class="logo-container" to="/">
+  <header class="toolbar" :class="[isScrolled && 'toolbar--scrolled']">
+    <div
+      class="toolbar__content content-width flex--center row pa-1 space-between"
+    >
+      <NuxtLink class="toolbar__logo" to="/">
         <AppLogo />
       </NuxtLink>
-      <section class="flex--center row space-between">
+      <section class="toolbar__buttons flex--center row space-between">
         <AppButton dense label="I didn’t get my tickets" to="/claim-tickets" />
-        <AppButton dense label="Create your own event" primary />
+        <AppButton
+          class="hidden--mobile"
+          dense
+          label="Create your own event"
+          primary
+        />
+        <AppButton class="hidden--desktop" dense label="Create event" primary />
       </section>
     </div>
   </header>
 </template>
 
 <script>
-export default {}
+export default {
+  data: () => ({
+    isScrolled: false,
+  }),
+  mounted() {
+    window.addEventListener('scroll', this.onScroll, { passive: true })
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.onScroll)
+  },
+  methods: {
+    onScroll(e) {
+      this.isScrolled = window.top.scrollY !== 0
+    },
+  },
+}
 </script>
 
 <style scoped>
-header {
-  min-height: 56px;
+.toolbar {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0);
   left: 0;
+  min-height: 56px;
   position: fixed;
   position: sticky;
   top: 0;
+  transition: box-shadow, transform 150ms var(--easing-standard);
   width: 100%;
 }
 
-header > div {
-  background-color: rgba(242, 242, 242, 0.8);
+.toolbar--scrolled {
+  background-color: rgba(242, 242, 242, 0.6);
   backdrop-filter: blur(2px);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  transform: translateY(-20px);
+}
+
+.toolbar__content {
   max-width: 1280px;
   padding: 2rem 1rem 0.5rem;
 }
 
-section {
-  min-width: 388px;
-}
-
-.logo-container {
+.toolbar__logo {
   display: block;
   height: 34px;
   max-width: 34px;
@@ -47,8 +73,14 @@ section {
 }
 
 @media (min-width: 600px) {
-  .logo-container {
+  .toolbar__logo {
     max-width: 200px;
+  }
+}
+
+@media (min-width: 960px) {
+  .toolbar__buttons {
+    min-width: 388px;
   }
 }
 </style>

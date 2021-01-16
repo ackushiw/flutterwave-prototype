@@ -35,6 +35,10 @@ main {
   gap: 1rem;
 }
 
+.hidden--mobile {
+  display: none !important;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -78,6 +82,13 @@ main {
 }
 
 @media (min-width: 960px) {
+  .hidden--desktop {
+    display: none !important;
+  }
+  .hidden--mobile {
+    display: unset !important;
+  }
+
   .row--desktop {
     flex-direction: row;
   }
