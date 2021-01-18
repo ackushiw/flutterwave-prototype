@@ -126,6 +126,8 @@ const testLinks = {
 }
 
 export default {
+  scrollToTop: true,
+
   asyncData({ $axios, params, store }) {
     store.dispatch('fetchEvent', params.id)
   },
