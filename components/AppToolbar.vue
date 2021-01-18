@@ -3,7 +3,7 @@
     <div
       class="toolbar__content content-width flex--center row pa-1 space-between"
     >
-      <NuxtLink class="toolbar__logo" to="/">
+      <NuxtLink aria-label="Home" class="toolbar__logo" to="/">
         <AppLogo />
       </NuxtLink>
       <section class="toolbar__buttons flex--center row space-between">

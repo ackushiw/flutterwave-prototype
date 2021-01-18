@@ -1,11 +1,21 @@
 <template>
-  <NuxtLink class="event-block" :to="`/event/${event.id}`">
+  <NuxtLink
+    :aria-label="event.name"
+    class="event-block"
+    :to="`/event/${event.id}`"
+  >
     <section class="event-block__image">
-      <img alt="" loading="lazy" :src="event.image" />
+      <img
+        :alt="'image for ' + event.name"
+        height="225px"
+        loading="lazy"
+        :src="event.image"
+        width="400px"
+      />
     </section>
     <section class="event-block__details">
       <span class="date date--small">{{ event.start_time | date }}</span>
-      <h3>{{ event.name }}</h3>
+      <strong class="event-block__name">{{ event.name }}</strong>
 
       <span
         v-if="event.is_sold_out"
@@ -75,6 +85,13 @@ export default {
 
 .event-block__details {
   padding: 1rem 0;
+}
+
+.event-block__name {
+  display: block;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  margin-bottom: 5px;
 }
 
 .date {
