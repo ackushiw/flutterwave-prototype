@@ -1,3 +1,5 @@
+import { get, set } from 'idb-keyval'
+
 const getCacheId = ({ id }) => `fw_event_${id}`
 
 const buildEvent = (event) => {
@@ -40,8 +42,6 @@ export const actions = {
     })
 
     commit('SET_EVENTS', eventsCollection)
-
-    return events
   },
 
   async fetchEvent({ commit, dispatch, state }, eventId) {
@@ -109,7 +109,15 @@ export const mutations = {
     state.events = events
   },
 
+  SET_EVENTS_FROM_CACHE(state, events) {
+    state.events = events
+  },
+
   SET_EVENT_TICKETS(state, ticketsByEvent) {
+    state.ticketsByEvent = ticketsByEvent
+  },
+
+  SET_EVENT_TICKETS_FROM_CACHE(state, ticketsByEvent) {
     state.ticketsByEvent = ticketsByEvent
   },
 }
@@ -118,3 +126,40 @@ export const state = () => ({
   events: {},
   ticketsByEvent: {},
 })
+
+export const plugins = [
+  (store) => {
+    const { commit } = store
+    try {
+      get('events').then((eventsAsString) => {
+        if (eventsAsString) {
+          commit('SET_EVENTS_FROM_CACHE', JSON.parse(eventsAsString))
+        }
+      })
+
+      get('ticketsByEvent').then((ticketsAsString) => {
+        if (ticketsAsString) {
+          commit('SET_EVENT_TICKETS_FROM_CACHE', JSON.parse(ticketsAsString))
+        }
+      })
+    } catch (error) {}
+
+    store.subscribe((mutation) => {
+      switch (mutation.type) {
+        case 'SET_EVENTS':
+          try {
+            set('events', JSON.stringify(mutation.payload))
+          } catch (error) {}
+          break
+
+        case 'SET_EVENT_TICKETS':
+          try {
+            set('ticketsByEvent', JSON.stringify(mutation.payload))
+          } catch (error) {}
+          break
+        default:
+          break
+      }
+    })
+  },
+]
