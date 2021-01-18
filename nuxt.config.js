@@ -4,6 +4,7 @@ export default {
   env: {
     fwKey: 'FLWPUBK_TEST-689e890449313d34531131d279e2ed27-X',
   },
+  modern: true,
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -14,8 +15,6 @@ export default {
   head: {
     title: 'Flutterwave events',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         content: 'The best events happening now.',
         hid: 'description',
@@ -81,8 +80,19 @@ export default {
   build: {},
 
   pwa: {
+    manifest: {
+      name: 'Flutterwave Events',
+      short_name: 'Flutterwave',
+    },
+    meta: {
+      description: 'The best events happening now.',
+      name: 'Flutterwave Events',
+      ogHost: process.env.URL,
+      short_name: 'Flutterwave',
+      theme_color: '#F5A623',
+    },
     workbox: {
-      /* workbox options */
+      offlineStrategy: 'StaleWhileRevalidate',
       runtimeCaching: [
         // Cache unsplash images
         {
