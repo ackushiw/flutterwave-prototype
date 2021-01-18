@@ -108,6 +108,14 @@
             : 'cart--empty',
         ]"
       >
+        <button class="mobile-expand-btn" @click="mobileCart = !mobileCart">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"
+            />
+          </svg>
+        </button>
         <header class="block-spacing flex--center row space-between">
           <button
             v-if="showForm"
@@ -139,14 +147,9 @@
             </svg>
             <span class="text--bold">Go back</span>
           </button>
-          <h3 v-else class="text--uppercase">Order summary</h3>
-
-          <AppButton
-            v-if="!showForm"
-            dense
-            :label="mobileCart ? 'Close' : 'View'"
-            @click="mobileCart = !mobileCart"
-          />
+          <h3 v-else class="text--uppercase" @click="mobileCart = !mobileCart">
+            Order summary
+          </h3>
         </header>
 
         <div class="block-spacing divider" />
@@ -256,6 +259,8 @@
 import isEmpty from 'lodash-es/isEmpty'
 
 export default {
+  scrollToTop: true,
+
   props: {
     event: {
       required: true,
@@ -425,7 +430,7 @@ export default {
 }
 
 h1 {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 h3 {
@@ -527,16 +532,33 @@ h3 {
 }
 
 .list--tickets {
-  margin: 81px 0 14px;
+  margin: 1rem 0;
 }
 
 .list__name--tickets {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .list--tickets .list__item {
   align-items: center;
   border-bottom: 1px solid #bdbdbd;
   padding: 2rem 0;
+}
+
+.mobile-expand-btn {
+  background: white;
+  border-radius: 24px;
+  color: rgba(0, 0, 0, 0.4);
+  height: 42px;
+  left: 50%;
+  position: absolute;
+  top: 1px;
+  transform: translateX(-21px);
+  width: 42px;
+  padding: 0;
+}
+.mobile-expand-btn svg {
+  height: 40px;
+  width: 40px;
 }
 
 .quantity {
@@ -548,6 +570,10 @@ h3 {
 }
 
 @media (max-width: 959px) {
+  h3 {
+    text-align: center;
+    width: 100%;
+  }
   section {
     padding-bottom: 72px;
   }
@@ -557,11 +583,14 @@ h3 {
     transition-timing-function: var(--easing-standard);
   }
   .cart--min {
-    transform: translateY(calc(100vh - 104px));
+    transform: translateY(calc(100vh - 164px));
   }
   .cart--open {
     transform: translateY(0);
     transition-duration: 300ms;
+  }
+  .cart--open .mobile-expand-btn svg {
+    transform: rotate(180deg);
   }
 
   .cart--empty {
@@ -569,14 +598,33 @@ h3 {
     transition-duration: 200ms;
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
+
+  .list--tickets .text--number {
+    font-size: 20px;
+  }
 }
 
 @media (min-width: 960px) {
+  h1 {
+    margin-top: 60px;
+  }
+
   .cart {
     border-top-right-radius: 0;
     max-width: 470px;
     position: relative;
     top: 0;
+  }
+
+  .mobile-expand-btn {
+    display: none;
+  }
+
+  .list--tickets {
+    margin: 81px 0 14px;
+  }
+  .list__name--tickets {
+    font-size: 2rem;
   }
 }
 </style>
