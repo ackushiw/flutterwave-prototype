@@ -13,4 +13,4 @@
   Cache-Control: no-cache
 
 https://assets.flutterwave.com/*.js
-  Cache-Control: no-cache
+  Cache-Control: max-age=86400, private
