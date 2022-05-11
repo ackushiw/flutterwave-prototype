@@ -26,7 +26,7 @@
     "@nuxt/content": "^1.9.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/pwa": "^3.0.2",
-    "core-js": "^3.6.5",
+    "core-js": "^3.22.5",
     "date-fns": "^2.16.1",
     "flutterwave-vue-v3": "^1.0.5",
     "idb-keyval": "^5.0.1",
