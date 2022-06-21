@@ -29,7 +29,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
     "flutterwave-vue-v3": "^1.0.5",
-    "idb-keyval": "^5.0.1",
+    "idb-keyval": "^6.2.0",
     "lodash-es": "^4.17.20",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.14.6"
